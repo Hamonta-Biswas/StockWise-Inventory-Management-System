@@ -15,7 +15,7 @@ StockWise is built with React + Vite, Node.js + Express, and SQLite. It contains
 5. **Sales and billing** — create a multi-item sale, calculate the total, save the receipt record, and deduct stock automatically.
 6. **Reports** — review recent revenue, daily sales, top-selling products, and stock value by category.
 
-The application uses Bangladeshi taka (BDT) for the displayed currency. The sample data is fictional.
+The application uses BDT as the currency. All demonstration products and suppliers use fictional information.
 
 ## Technology
 

@@ -1,0 +1,61 @@
+name: StockWise CI
+
+on:
+  push:
+    branches: [main, 'feature/**', 'fix/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install server dependencies
+        run: npm install --prefix server
+
+      - name: Run backend tests with coverage
+        run: npm test --prefix server
+
+      - name: Install frontend dependencies
+        run: npm install --prefix client
+
+      - name: Build frontend
+        run: npm run build --prefix client
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Start API server
+        run: |
+          cd server
+          DATABASE_FILE=./data/ci.sqlite npm start > /tmp/stockwise-api.log 2>&1 &
+          for attempt in {1..30}; do
+            if curl -fsS http://localhost:5000/api/health; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/stockwise-api.log
+          exit 1
+
+      - name: Start frontend preview
+        run: |
+          npm run preview --prefix client -- --host 127.0.0.1 > /tmp/stockwise-web.log 2>&1 &
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/stockwise-web.log
+          exit 1
+
+      - name: Run Selenium browser smoke test
+        env:
+          APP_URL: http://127.0.0.1:4173
+          HEADLESS: 'true'
+        run: npm run test:e2e --prefix client

@@ -1,0 +1,16 @@
+{
+  "name": "stockwise-inventory-management-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CSE 3206 Software Engineering Sessional project",
+  "engines": {
+    "node": ">=20 <23"
+  },
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "test": "npm test --prefix server",
+    "build": "npm run build --prefix client"
+  }
+}

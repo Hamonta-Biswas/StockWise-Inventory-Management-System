@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: InventoryService updates stock, records movement, and publishes low-stock event
+ok 1 - InventoryService updates stock, records movement, and publishes low-stock event
+  ---
+  duration_ms: 1.262914
+  type: 'test'
+  ...
+# Subtest: InventoryService rejects a movement when a product is missing
+ok 2 - InventoryService rejects a movement when a product is missing
+  ---
+  duration_ms: 0.500802
+  type: 'test'
+  ...
+# Subtest: Factory Method creates a stock-in movement
+ok 3 - Factory Method creates a stock-in movement
+  ---
+  duration_ms: 0.815333
+  type: 'test'
+  ...
+# Subtest: Factory Method prevents stock from becoming negative
+ok 4 - Factory Method prevents stock from becoming negative
+  ---
+  duration_ms: 0.407392
+  type: 'test'
+  ...
+# Subtest: Factory Method treats adjustment quantity as the new count
+ok 5 - Factory Method treats adjustment quantity as the new count
+  ---
+  duration_ms: 0.12008
+  type: 'test'
+  ...
+# Subtest: Factory Method rejects unknown types and invalid quantities
+ok 6 - Factory Method rejects unknown types and invalid quantities
+  ---
+  duration_ms: 0.121002
+  type: 'test'
+  ...
+# Subtest: Observer notifies subscribers and supports unsubscribe
+ok 7 - Observer notifies subscribers and supports unsubscribe
+  ---
+  duration_ms: 1.481112
+  type: 'test'
+  ...
+# Subtest: Adapter translates application notifications to provider messages
+ok 8 - Adapter translates application notifications to provider messages
+  ---
+  duration_ms: 0.24673
+  type: 'test'
+  ...
+# Subtest: LowStockNotifier reacts to Observer events through the notification adapter
+ok 9 - LowStockNotifier reacts to Observer events through the notification adapter
+  ---
+  duration_ms: 0.374442
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 195.529197
+# start of coverage report
+# ----------------------------------------------------------------------------------
+# file                              | line % | branch % | funcs % | uncovered lines
+# ----------------------------------------------------------------------------------
+# mnt                               |        |          |         | 
+#  data                             |        |          |         | 
+#   inventory-management-system     |        |          |         | 
+#    server                         |        |          |         | 
+#     src                           |        |          |         | 
+#      patterns                     |        |          |         | 
+#       low-stock-notifier.js       | 100.00 |   100.00 |  100.00 | 
+#       movement-factory.js         | 100.00 |    94.44 |  100.00 | 
+#       notification-adapter.js     |  82.61 |    75.00 |   66.67 | 9-10 21-22
+#       stock-event-bus.js          | 100.00 |    75.00 |  100.00 | 
+#      services                     |        |          |         | 
+#       inventory-service.js        | 100.00 |   100.00 |  100.00 | 
+#     test                          |        |          |         | 
+#      inventory-service.test.js    | 100.00 |   100.00 |  100.00 | 
+#      movement-factory.test.js     | 100.00 |   100.00 |  100.00 | 
+#      patterns.test.js             | 100.00 |   100.00 |  100.00 | 
+# ----------------------------------------------------------------------------------
+# all files                         |  98.16 |    93.94 |   97.67 | 
+# ----------------------------------------------------------------------------------
+# end of coverage report

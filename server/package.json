@@ -1,0 +1,28 @@
+{
+  "name": "stockwise-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Express API for the StockWise Inventory Management System",
+  "engines": {
+    "node": ">=20 <23"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test --experimental-test-coverage",
+    "test:watch": "node --test --watch",
+    "db:seed": "node src/db/seed.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "stockwise-inventory-management-system": "file:..",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}

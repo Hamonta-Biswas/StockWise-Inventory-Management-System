@@ -1,0 +1,92 @@
+classDiagram
+    class ProductRepository {
+      +list(filters)
+      +getById(id)
+      +create(input)
+      +update(id, input)
+      +delete(id)
+    }
+    class SupplierRepository {
+      +list()
+      +getById(id)
+      +create(input)
+      +update(id, input)
+      +delete(id)
+    }
+    class InventoryRepository {
+      +getProduct(id)
+      +updateQuantity(id, quantity)
+      +addMovement(movement)
+      +listMovements(limit)
+    }
+    class SalesRepository {
+      +create(sale)
+      +getById(id)
+      +list(limit)
+    }
+    class InventoryService {
+      -db
+      -inventoryRepository
+      -eventBus
+      +recordMovement(data)
+    }
+    class SalesService {
+      -db
+      -salesRepository
+      -productRepository
+      -inventoryService
+      +createSale(items)
+    }
+    class MovementFactory {
+      +create(type, data)$
+    }
+    class StockMovement {
+      +type
+      +quantity
+      +note
+      +apply(currentStock)
+    }
+    class StockInMovement
+    class StockOutMovement
+    class StockAdjustment
+    class StockEventBus {
+      +subscribe(eventName, listener)
+      +publish(eventName, payload)
+    }
+    class LowStockNotifier {
+      -notificationPort
+      +close()
+    }
+    class NotificationAdapter {
+      -provider
+      +send(notification)
+    }
+    class ConsoleNotificationProvider {
+      +sendMessage(message)
+    }
+    class Product
+    class Supplier
+    class StockMovementRecord
+    class Sale
+    class SaleItem
+
+    StockMovement <|-- StockInMovement
+    StockMovement <|-- StockOutMovement
+    StockMovement <|-- StockAdjustment
+    MovementFactory ..> StockMovement : creates
+    InventoryService --> MovementFactory : uses
+    InventoryService --> InventoryRepository : persists through
+    InventoryService --> StockEventBus : publishes
+    StockEventBus --> LowStockNotifier : notifies
+    LowStockNotifier --> NotificationAdapter : sends through
+    NotificationAdapter --> ConsoleNotificationProvider : adapts to
+    SalesService --> SalesRepository : saves
+    SalesService --> ProductRepository : reads products
+    SalesService --> InventoryService : deducts stock
+    ProductRepository ..> Product
+    SupplierRepository ..> Supplier
+    InventoryRepository ..> StockMovementRecord
+    SalesRepository ..> Sale
+    Sale "1" --> "many" SaleItem
+    Product "1" --> "0..1" Supplier : supplied by
+    Product "1" --> "many" StockMovementRecord : movement history

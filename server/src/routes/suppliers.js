@@ -8,7 +8,18 @@ function supplierInput(body) {
     phone: String(body.phone ?? '').trim(),
     address: String(body.address ?? '').trim()
   };
-  if (!input.name) throw new Error('Supplier name is required.');
+
+  if (!input.name) {
+    throw new Error('Supplier name is required.');
+  }
+
+  if (
+    input.email &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)
+  ) {
+    throw new Error('Supplier email must be valid.');
+  }
+
   return input;
 }
 
